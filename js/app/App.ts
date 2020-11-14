@@ -11,7 +11,7 @@ import { AppGithub } from './controls/AppGithub'
 import { AppAbout } from './controls/AppAbout'
 import { RustGuy } from './controls/RustGuy'
 import { KnobProperties, KnobValueChangeCallback } from './controls/Knob'
-import { FmOsc } from '../../pkg'
+// import { FmOsc } from '../../pkg'
 
 export interface PadConfig {
   padSize: EBBArea;
@@ -60,21 +60,21 @@ export class App extends CanvasEx {
 
     })
 
-    let fm = e.detail as FmOsc
-      if (fm) {
+    // let fm = e.detail as FmOsc
+    //   if (fm) {
       
         
-        fm.set_note(50);
-        fm.set_fm_frequency(0);
-        fm.set_fm_amount(0);
-        fm.set_gain(0.8);
-        window.setTimeout(() => {
-          fm.stop_playing()
-          fm.free
-        }, 1000)
-      }
+    //     fm.set_note(50);
+    //     fm.set_fm_frequency(0);
+    //     fm.set_fm_amount(0);
+    //     fm.set_gain(0.8);
+    //     window.setTimeout(() => {
+    //       fm.stop_playing()
+    //       fm.free
+    //     }, 1000)
+    //   }
 
-    console.log(e)
+    // console.log(e)
 
   }
 /**
