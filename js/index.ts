@@ -1,4 +1,4 @@
-import { FmOsc } from "../pkg";
+
 import { App, Config } from "./app/App";
 import { EBBArea } from "./dom/structs";
 const pkg = require('../package.json')
@@ -15,14 +15,14 @@ import('../pkg')
 .catch(console.error);
 
 
-const audioBootstrap = (e: MouseEvent) => {
+// const audioBootstrap = (e: MouseEvent) => {
 
-  let osc: FmOsc = new synth.FmOsc()
-  console.log(osc)
+//   let osc: FmOsc = new synth.FmOsc()
+//   console.log(osc)
   
-  let wasmevent = new CustomEvent<any>('wasmnotification', { detail: osc } )
-  document.dispatchEvent(wasmevent)
-}
+//   let wasmevent = new CustomEvent<any>('wasmnotification', { detail: osc } )
+//   document.dispatchEvent(wasmevent)
+// }
 
 const sequencer = new App(pkg)
 
