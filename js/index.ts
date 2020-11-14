@@ -3,16 +3,16 @@ import { App, Config } from "./app/App";
 import { EBBArea } from "./dom/structs";
 const pkg = require('../package.json')
 
-let synth
-import('../pkg')
-.then(module => {
+// let synth
+// import('../pkg')
+// .then(module => {
 
-  synth = module
+//   synth = module
   
 
 
-})
-.catch(console.error);
+// })
+// .catch(console.error);
 
 
 // const audioBootstrap = (e: MouseEvent) => {
