@@ -11,12 +11,14 @@ import { AppGithub } from './controls/AppGithub'
 import { AppAbout } from './controls/AppAbout'
 import { RustGuy } from './controls/RustGuy'
 import { KnobProperties, KnobValueChangeCallback } from './controls/Knob'
-// import { FmOsc } from '../../pkg'
+import { FmOsc } from '../../pkg'
+
 
 export interface PadConfig {
   padSize: EBBArea;
   padMargin: number;
 }
+
 
 export type Config = { string : any }
 
@@ -26,13 +28,12 @@ let OFFSET_BOTTOM = 50
 
 export const INSTR_NAMES = [ 'BD', 'SD', 'LT', 'MT', 'HT', 'CA', 'MA', 'CB', 'HH', 'OH', 'CY', 'CL' ]
 
-
 /**
  * 🐳 implementation of CanvasEx
  * - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 export class App extends CanvasEx {
   
-  started: boolean = false
+  started: boolean = true
   hasSized = false
   ready: boolean = false
   isPlaying: boolean = false
@@ -49,6 +50,7 @@ export class App extends CanvasEx {
   mixerControls: Array<Dial> = []
   selectors: Array<Selector> = []
   currentInstrument: number = -1
+
   wasmChange = (e: CustomEvent<any> | null) => {
     console.log(this)
     this.init().then(() => {
@@ -77,14 +79,17 @@ export class App extends CanvasEx {
     // console.log(e)
 
   }
+
 /**
   * constructor
+  * @param { Config } config - 
   * -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
   constructor(public config: Config) {
     super('canvas')
     document.addEventListener('wasmnotification', this.wasmChange)
     requestAnimationFrame(this.animloop)
   }
+
 
 /**
   *
@@ -108,9 +113,9 @@ export class App extends CanvasEx {
     }
   }
 
-  /**
-   * 
-   * -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
+/**
+  * 
+  * -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
   onClockStart: Callback = (e) => {
     console.log('onstart')
     
@@ -152,7 +157,6 @@ export class App extends CanvasEx {
     for (const strip of this.controlStrips) {
       strip.update(false)
     }
-    
   }
 
   
@@ -191,6 +195,9 @@ export class App extends CanvasEx {
     // }
   }
 
+  loadWasm() {
+    this.wasmChange()
+  }
   
 
   /**
@@ -213,6 +220,7 @@ export class App extends CanvasEx {
       return
     }
 
+    document.addEventListener('click', ())
     setTimeout(() => {
       console.log(rect)
       

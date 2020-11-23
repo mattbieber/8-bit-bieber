@@ -472,7 +472,6 @@ settings()
     /** - DRAGON - - - - - - - - - - - - - - - - - - - - - - - - -  */
     s.dragon.rd.pos.x = Math.round(geo.centerPoint.x/2.2)
     dragonBounds.l = Math.round(geo.centerPoint.x/4)
-    dragon.render(s.dragon.rd)
 
     ctx.restore()
 

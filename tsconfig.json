@@ -65,6 +65,11 @@
     /* Advanced Options */
     "forceConsistentCasingInFileNames": true  /* Disallow inconsistently-cased references to the same file. */
   },
+  "typedocOprions": {
+    "inputFiles": ["./js"],
+    "mode": "modules",
+    "out": "doc"
+  },
   "exclude": ["node_modules", "pkg"],
   "include": ["js/**/*", "static/worker.js", "static/clockWorker.js"]
 }

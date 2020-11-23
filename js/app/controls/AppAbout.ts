@@ -9,7 +9,7 @@ import { Pressable } from '../../dom/traits'
 const imageUrl = 'https://s3.amazonaws.com/8-bitbieber.com/question.svg'
 
 
-export class AppAbout extends SceneNode implements Pressable{
+export class AppAbout extends SceneNode implements Pressable {
 
   image: HTMLImageElement
 
@@ -20,6 +20,7 @@ export class AppAbout extends SceneNode implements Pressable{
       this.image = new Image()
 
   }
+
   isPressed: boolean
   isDisabled: boolean
   
@@ -42,7 +43,7 @@ export class AppAbout extends SceneNode implements Pressable{
       return new Promise(resolve => {
         this.image.src = src
         this.image.onload = () => {
-          resolve()
+          resolve(void)
         }
       })
       

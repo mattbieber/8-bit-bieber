@@ -1,10 +1,12 @@
 
-
 export interface EBBVector {
   x: number;
   y: number;
 }
 
+/**
+ * 
+ */
 export type EBBArea = {
   w: number;
   h: number;
@@ -15,7 +17,6 @@ export interface EBBRectMetrics {
   y: number;
   w: number;
   h: number;
-  
 }
 
 export interface EBBCircleMetrics extends EBBRectMetrics {
@@ -37,8 +38,18 @@ export interface EBBGeo {
 
 export type Letters = Record<string, () => void>
 
+/**
+ * 🐙
+ * @typedefn{ }
+ * 
+ * - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 export type ColoredRects = Record<string, Array<{ metrics: number[], colorIndex: number }>> 
 
+/**
+ * 🐙
+ * @typedef
+ * 
+ * - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 export type PlainRect = Record<string, Array<number[]>>
 
 export enum EBBDirection {
@@ -72,6 +83,7 @@ export interface EBBDrawingData {
   rd: EBBRenderData;
   ad: Record<string, EBBAnimationData>;
 }
+
 
 export class EBBDD implements EBBDrawingData {
   rd: EBBRenderData
