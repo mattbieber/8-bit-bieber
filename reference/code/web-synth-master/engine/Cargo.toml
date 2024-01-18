@@ -1,0 +1,2 @@
+[workspace]
+members = ["engine", "common", "midi", "polysynth", "spectrum_viz", "wavetable"]

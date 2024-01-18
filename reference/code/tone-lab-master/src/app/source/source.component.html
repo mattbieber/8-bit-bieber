@@ -1,0 +1,34 @@
+<div class="socket" #socket>
+    <svg viewBox="0 0 100 100">
+
+        <circle r="45"
+                cx="50"
+                cy="50"
+                fill="none"
+                stroke="grey"
+                stroke-width="5"></circle>
+
+        <text *ngIf="!!name"
+              fill="gray"
+              font-family="monospace"
+              x="50"
+              y="56"
+              font-size="24"
+              text-anchor="middle">
+            {{ name }}
+        </text>
+
+    </svg>
+</div>
+
+<div class="patch-menu"
+     [style.top.px]="centrePoint().y"
+     [style.left.px]="centrePoint().x" *ngIf="menuActive">
+    <a class="patch-menu-close" (click)="menuActive = false">cancel</a>
+    <a *ngFor="let s of sinks; let i = index"
+       class="patch-menu-item" (click)="removeConnectionToSink(i)">
+        {{ s }}
+    </a>
+</div>
+
+<app-cable #cable></app-cable>

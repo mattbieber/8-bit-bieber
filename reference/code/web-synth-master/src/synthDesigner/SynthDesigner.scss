@@ -1,0 +1,69 @@
+// wavyjones oscilloscope
+#oscilloscope {
+  width: 400px;
+  height: 200px;
+}
+
+.synth-module {
+  display: flex;
+  flex-direction: row;
+  height: 373px;
+  width: 100%;
+  padding-bottom: 10px;
+
+  button,
+  select {
+    height: 20px;
+  }
+
+  .synth-remove-button {
+    color: #b22;
+    font-family: Hack, Oxygen Mono, monospace;
+    cursor: pointer;
+    padding-right: 4px;
+    margin-right: -17px;
+    z-index: 3;
+    margin-left: 5px;
+    height: 10px;
+  }
+
+  .effects {
+    display: flex;
+    flex-direction: row;
+
+    .add-effect {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  .presets {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.effect-module {
+  display: flex;
+  flex-direction: row;
+
+  .effect-module-connector-line-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .effect-module-connector-line {
+      height: 0;
+      width: 16px;
+      border-bottom: 1px solid #ccc;
+    }
+  }
+}
+
+.remove-button {
+  color: #b22;
+  font-family: Hack, Oxygen Mono, monospace;
+  cursor: pointer;
+}

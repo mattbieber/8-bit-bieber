@@ -1,0 +1,117 @@
+name: Build, Test, and Deploy
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      # Set up build environment + toolchains with Rust nightly with Wasm support and NodeJS
+      - name: Install minimal Rust nightly
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly-2020-01-21
+      - name: Use Rust nightly
+        run: rustup default nightly-2020-01-21
+      - name: Install Rust Wasm support
+        run: rustup target add wasm32-unknown-unknown
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '13.1'
+
+      # Caching
+      # \/ Disabled due to (what sems to be) a bug in the `actions/cache` action (issue filed)
+      # - name: Cache cargo binaries
+      #   id: cache-cargo-binaries
+      #   uses: actions/cache@v1
+      #   with:
+      #     path: ~/.cargo/bin
+      #     key: ${{ runner.os }}_nightly-2020-01-21_cargo-registry_just-0.5.1_wasm-bindgen-cli-0.2.54
+      - name: Cache cargo registry
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('engine/Cargo.lock') }}
+      - name: Cache cargo index
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/git
+          key: ${{ runner.os }}-cargo-index-${{ hashFiles('engine/Cargo.lock') }}
+      - name: Cache Rust lib build artifacts
+        uses: actions/cache@v1
+        with:
+          path: ./engine/target
+          key: ${{ runner.os }}_nightly-2020-01-21_${{ hashFiles('engine/Cargo.lock') }}
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ./node_modules
+          key: ${{ hashFiles('yarn.lock') }}
+
+      - name: Create custom binaries directory
+        run: mkdir ~/bin
+      - name: Install `just`
+        run: curl https://web-synth-ci-binaries.ameo.design/just -o ~/bin/just && chmod +x ~/bin/just
+      - name: Install `wasm-bindgen-cli`
+        run: curl https://web-synth-ci-binaries.ameo.design/wasm-bindgen -o ~/bin/wasm-bindgen && chmod +x ~/bin/wasm-bindgen
+      - name: Install `wasm-opt`
+        run: curl https://web-synth-ci-binaries.ameo.design/wasm-opt -o ~/bin/wasm-opt && chmod +x ~/bin/wasm-opt
+      - name: Install `wasm-strip`
+        run: curl https://web-synth-ci-binaries.ameo.design/wasm-strip -o ~/bin/wasm-strip && chmod +x ~/bin/wasm-strip
+      - name: Add custom binaries directory to the PATH
+        run: echo "::add-path::$HOME/bin"
+
+      # Build all Rust modules into Wasm, run `wasm-bindgen`, compile JavaScript, and link everything together
+      - name: Install node modules
+        run: yarn
+      - name: Build all wasm + javascript
+        run: just build-all
+
+      - name: Upload built site as artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: dist
+          path: dist
+
+  cypress-test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Download built site artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: dist
+
+      # Run Cypress tests
+      - name: Cypress Run
+        uses: cypress-io/github-action@v1.16.1
+        with:
+          browser: chrome
+          start: yarn cypress:serve
+          wait-on: 'http://localhost:9000'
+
+  deploy-static-site:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Install `phost`
+        run: pip3 install --user setuptools wheel && pip3 install --user "git+https://github.com/Ameobea/phost.git#egg=phost&subdirectory=client"
+      - name: Add `phost` to the `PATH`
+        run: echo "::add-path::$HOME/.local/bin"
+      - name: Extract `phost` config from secrets
+        env: # Or as an environment variable
+          PHOST_CONFIG_BASE64: ${{ secrets.PHOST_CONFIG_BASE64 }}
+        run: mkdir ~/.phost; echo "$PHOST_CONFIG_BASE64" | base64 -d > ~/.phost/conf.toml
+      - name: Download built site artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: dist
+      - name: Deploy
+        run: phost update notes patch ./dist

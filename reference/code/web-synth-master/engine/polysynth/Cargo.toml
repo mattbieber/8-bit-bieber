@@ -1,0 +1,22 @@
+[package]
+name = "polysynth"
+version = "0.1.0"
+authors = ["Casey Primozic <me@ameo.link>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# Disable logging staticly in release, making all log calls into no-ops
+log = { version = "0.4", features = ["release_max_level_off"] }
+uuid = { version = "0.8", features = ["serde"] }
+wasm-bindgen = { version = "=0.2.64", optional = true }
+wasm-logger = "0.2"
+wasm-bindgen-futures = { version = "0.4.14", optional = true }
+common = { path = "../common", optional = true }
+console_error_panic_hook = "0.1.6"
+js-sys = "^0.3.36"
+
+[features]
+wasm-bindgen-exports = ["wasm-bindgen", "wasm-bindgen-futures", "common"]

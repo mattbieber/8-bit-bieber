@@ -1,0 +1,10 @@
+
+
+        <app-toggles [options]="types"
+                     [name]="'type'"
+                     class="noise-type-toggle"
+                     (toggle)="setType($event)"
+                     [activeOption]="currentType"></app-toggles>
+        <br>
+        <app-source [name]="'out'" [signal]="noise"></app-source>
+

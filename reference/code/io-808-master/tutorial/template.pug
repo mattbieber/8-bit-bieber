@@ -1,0 +1,68 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="Content-type" content="text/html; charset=utf-8")
+        meta(http-equiv="Accept-CH" content="DPR")
+        title= "iO-808 Tutorial"
+        meta(name="description" content="Tutorial for the iO-808 drum machine")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+
+        style.
+            !{css}
+
+        // typekit font loading
+        script(type="text/javascript").
+            (function (d) {
+                var config = {
+                            kitId: 'rpz1qnd',
+                            scriptTimeout: 3000,
+                            async: true
+                        },
+                        h = d.documentElement, t = setTimeout(function () {
+                            h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive";
+                        }, config.scriptTimeout), tk = d.createElement("script"), f = false, s = d.getElementsByTagName("script")[0], a;
+                h.className += " wf-loading";
+                tk.src = 'https://use.typekit.net/' + config.kitId + '.js';
+                tk.async = true;
+                tk.onload = tk.onreadystatechange = function () {
+                    a = this.readyState;
+                    if (f || a && a != "complete" && a != "loaded")return;
+                    f = true;
+                    clearTimeout(t);
+                    try {
+                        Typekit.load(config)
+                    } catch (e) {
+                    }
+                };
+                s.parentNode.insertBefore(tk, s)
+            })(document);
+
+    body
+        .section
+            .column.typeset
+                block content
+                    != content
+
+        // livereload for development
+        if livereload
+            script.
+                document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>');
+
+
+        // gfycat loading
+        script(type="text/javascript" src="https://assets.gfycat.com/gfycat.js")
+
+        // fathom analytics
+        script(type="text/javascript").
+            (function(f, a, t, h, o, m){
+                a[h]=a[h]||function(){
+                    (a[h].q=a[h].q||[]).push(arguments)
+                };
+                o=f.createElement('script'),
+                m=f.getElementsByTagName('script')[0];
+                o.async=1; o.src=t; o.id='fathom-script';
+                m.parentNode.insertBefore(o,m)
+            })(document, window, '//analytics.vincentriemer.com/tracker.js', 'fathom');
+            fathom('set', 'siteId', 'XVJNW');
+            fathom('trackPageview');

@@ -1,0 +1,40 @@
+/* CSS compiled from SCSS. */
+/* --------------------------------------- */
+
+// Import Sassline base.
+@import "sassline-base";
+
+// Import your project SCSS module partials.
+@import "modules/globals";
+@import "modules/nav";
+@import "modules/header";
+@import "modules/footer";
+
+img {
+  display: block;
+  margin: 0 auto;
+  max-height: 225px;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+}
+
+canvas {
+  cursor: pointer;
+}
+
+.embed-responsive {
+  iframe {
+    position: relative;
+    max-width: 90%;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    max-height: 225px;
+
+    @include breakpoint(break-1) {
+      max-height: none;
+    }
+  }
+}
+
+

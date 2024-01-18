@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=600,initial-scale=1">
+    <script src="js/webaudio-controls.js" ></script>
+  </head>
+
+  <body>
+    <h1>Ruffbox - Play a Beat !11</h1>
+
+    A text-based beat sequencer. <br/><br/>
+
+    Needs <b>Chromium/Chrome 74+</b> or <b>Opera 62+</b> and <b>chrome://flags/#enable-experimental-web-platform-features</b> enabled!
+    
+    <h2> Scriptable Sequencer </h2>    
+    <div>
+      <textarea id="code_input" style="float: left; width:800px; height:400px; vertical-align:top; margin-right: 20px; padding-right: 0px;">
+cyc >> bd ~ ~ ~ sn ~ ~ ~ @del: rnd >> 0.0 0.1 0.2 @rev: rnd >> 0.0 0.1 0.2
+cyc >> saw ~ ~ saw ~ @freq: cyc >> 100 150 200 80 @lp-freq: bounce >> 200 500 20
+      </textarea>
+      
+      <div>
+	<webaudio-switch id="evaluate-loop" defval="0" value="0" type="kick">Evaluate</webaudio-switch> (Ctrl + Return)<br/> 
+	<webaudio-switch id="start-scheduler" defval="0" value="0" type="toggle">Start/Stop</webaudio-switch> (Ctrl + .) <br/><br/>
+	<b>Tempo:</b>  <input type="number" id="tempo" value="128" style="width:50px"> (milliseconds per sound event, on next eval)<br/>
+      </div>
+      
+      <br/>
+      <b>Usage:</b> Each symbol is a sound event, each line is a loop! <br/>
+      <b>Time:</b> All sequences run over a fixed time grid! <br/><br/>
+      <b>Sound Events:</b><br/>
+      <i>Samples: </i> bd, sn, hh, casio = bassdrum, snare, hihat, casio beep <br/> 
+      <i>Synths: </i> saw, sqr, sine = sawtooth, squarewave, sinewave <br/>
+      ~ = silence <br/><br/>
+      <b>Parameters: </b> rate (samples only), freq (synths only), pos, lp-freq, lp-q, lp-dist, rev, del, atk, rel, dur<br/>
+      <br/>
+      <b>Sequence Generators:</b> cyc = cycle, rnd = random, learn = markov chain, bounce = half-rectified sine curve, ramp = ramp <br/>            
+      <b>Pattern Anatomy:</b> [cyc | rnd | learn] >> [sound events] @PARAM: [cyc | rnd | learn | bounce | ramp] >> [seq | param list]
+    </div>
+    <br/><br/>
+    <div>
+      <b>Custom Sample </b>(use filename without extension, <b> alphanumeric filenames without underscore only (currently)</b>):<br/>
+      <input type="file" id="custom-sample"></input>
+    </div>
+    <div style="clear: left;">
+      <div style="float: left; padding-top: 10px; padding-right: 30px;">      
+	<h2 style="margin-bottom: 5px;">Master Reverb</h2>
+	Use 'rev' parameter on event!<br/>
+	<div style="padding-top: 10px;">      
+	  <webaudio-knob id="reverb-roomsize-knob" value="0.65" min="0.02" max="1.0" step="0.001" diameter="32">Roomsize</webaudio-knob>
+          <webaudio-knob id="reverb-dampening-knob" value="0.44" min="0.02" max="1.0" step="0.001" diameter="32">Damp</webaudio-knob>
+	</div>
+      </div>
+
+      <div style="float: left; padding-top: 10px;">      
+	<h2 style="margin-bottom: 5px;">Master Delay</h2>
+	Use 'del' parameter on event!
+	<div style="padding-top: 10px;">
+	  <webaudio-knob id="delay-time-knob" value="0.256" min="0.02" max="2.0" step="0.001" diameter="32">Time (sec)</webaudio-knob>
+	  <webaudio-knob id="delay-feedback-knob" value="0.5" min="0.00" max="1.0" step="0.001" diameter="32">Feedback</webaudio-knob>
+	  <webaudio-knob id="delay-cutoff-knob" value="3000" min="100" max="6000" step="1" diameter="32">Cutoff</webaudio-knob>
+	</div>
+      </div>
+    </div>
+    
+    <br/>
+    <br/>
+    <br/>
+    
+    <div style="clear: left; padding-top: 40px;">
+      Made with <b>Rust</b>, <b>Web Workers</b>, <b>AudioWorklet</b> and <b>WebAssembly</b>!
+    </div>
+    <br/>
+    <div>
+      Code: <a href ="https://github.com/the-drunk-coder/ruffbox">https://github.com/the-drunk-coder/ruffbox</a>
+    </div>
+    <br/>    
+    <br/>
+    <script src="js/setup.js?t=10"></script>        
+  </body>
+</html>

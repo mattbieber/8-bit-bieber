@@ -1,0 +1,12 @@
+sudo: false
+language: node_js
+notifications:
+  email: false
+script:
+- yarn run test
+- yarn run build
+after_success:
+- yarn run deploy
+env:
+  global:
+  - GH_REF: github.com/vincentriemer/io-808.git

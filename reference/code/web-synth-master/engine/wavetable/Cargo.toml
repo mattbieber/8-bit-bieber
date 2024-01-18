@@ -1,0 +1,10 @@
+[package]
+name = "wavetable"
+version = "0.1.0"
+authors = ["Casey Primozic <me@ameo.link>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]

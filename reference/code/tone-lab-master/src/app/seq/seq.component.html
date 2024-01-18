@@ -1,0 +1,65 @@
+
+
+
+        <div class="seq-signals" *ngFor="let c of signals; let i = index">
+            <app-slider [signal]="c"
+                        [style.color]="i === activeSignal ? 'red' : 'grey'"
+                        [min]="0.0"
+                        [max]="1.0"
+                        [name]="i + 1"></app-slider>
+
+            <a (click)="activeSignals[i] = !activeSignals[i]"
+               class="binary-toggle"
+               [class.active]="activeSignals[i]">{{ activeSignals[i] ? '1' : '0' }}</a>
+
+        </div>
+
+        <div class="seq-left">
+            <app-toggles [options]="noteLengths"
+                         [name]="'Period'"
+                         (toggle)="setPeriod($event)"
+                         [activeOption]="currentPeriod"></app-toggles>
+
+            <app-toggles [options]="noteLengths"
+                         [name]="'Note length'"
+                         (toggle)="setLength($event)"
+                         [activeOption]="currentLength"></app-toggles>
+            <br>
+            <a *ngIf="!isPlaying" (click)="seq()"
+               class="seq-btn seq-btn-start">START</a>
+            <a *ngIf="isPlaying" (click)="stop()"
+               [class.seq-btn-pulse]="pulse" class="seq-btn">STOP</a>
+
+            <app-source [name]="'freq'" [signal]="freq"></app-source>
+
+        </div>
+        <div class="seq-signals">
+            <app-slider (change)="gate.attack = $event"
+                        [style.color]="'grey'"
+                        [min]="0.0"
+                        [max]="1.0"
+                        [defaultValue]="0.01"
+                        [name]="'Attack'"></app-slider>
+            <app-slider (change)="gate.decay = $event"
+                        [style.color]="'grey'"
+                        [min]="0.0"
+                        [max]="1.0"
+                        [defaultValue]="0.0"
+                        [name]="'Decay'"></app-slider>
+            <app-slider (change)="gate.sustain = $event"
+                        [style.color]="'grey'"
+                        [min]="0.0"
+                        [max]="1.0"
+                        [defaultValue]="1.0"
+                        [name]="'Sustain'"></app-slider>
+            <app-slider (change)="gate.release = $event"
+                        [style.color]="'grey'"
+                        [min]="0.0"
+                        [max]="1.0"
+                        [defaultValue]="0.01"
+                        [name]="'Release'"></app-slider>
+        </div>
+        <div class="seq-right">
+            <app-source [name]="'env'" [signal]="gate"></app-source>
+        </div>
+

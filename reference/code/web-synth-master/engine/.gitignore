@@ -1,0 +1,6 @@
+/target
+**/*.rs.bk
+build/*
+!build/.gitkeep
+public/webaudio-wasm-standalone-wrapper.js
+*.log

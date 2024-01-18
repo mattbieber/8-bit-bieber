@@ -1,0 +1,74 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="Content-type" content="text/html; charset=utf-8")
+        title #{htmlWebpackPlugin.options.title}
+        meta(name="description" content="A fully recreated web-based TR-808 drum machine using React, Redux, and the Web Audio API.")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+
+        // apple splash screens
+        link(href=require('../splashscreens/iphone5_splash.png'), media='(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)', rel='apple-touch-startup-image')
+        link(href=require('../splashscreens/iphone6_splash.png'), media='(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)', rel='apple-touch-startup-image')
+        link(href=require('../splashscreens/iphoneplus_splash.png'), media='(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)', rel='apple-touch-startup-image')
+        link(href=require('../splashscreens/iphonex_splash.png'), media='(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)', rel='apple-touch-startup-image')
+        link(href=require('../splashscreens/ipad_splash.png'), media='(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)', rel='apple-touch-startup-image')
+        link(href=require('../splashscreens/ipadpro1_splash.png'), media='(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)', rel='apple-touch-startup-image')
+        link(href=require('../splashscreens/ipadpro2_splash.png'), media='(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)', rel='apple-touch-startup-image')
+
+        // inline global css
+        each cssFile in htmlWebpackPlugin.files.css
+            style !{compilation.assets[cssFile.substr(htmlWebpackPlugin.files.publicPath.length)].source()}
+
+        // typekit font loading
+        script(type="text/javascript").
+            (function (d) {
+                var config = {
+                            kitId: 'rpz1qnd',
+                            scriptTimeout: 3000,
+                            async: true
+                        },
+                        h = d.documentElement, t = setTimeout(function () {
+                            h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive";
+                        }, config.scriptTimeout), tk = d.createElement("script"), f = false, s = d.getElementsByTagName("script")[0], a;
+                h.className += " wf-loading";
+                tk.src = 'https://use.typekit.net/' + config.kitId + '.js';
+                tk.async = true;
+                tk.onload = tk.onreadystatechange = function () {
+                    a = this.readyState;
+                    if (f || a && a != "complete" && a != "loaded")return;
+                    f = true;
+                    clearTimeout(t);
+                    try {
+                        Typekit.load(config)
+                    } catch (e) {
+                    }
+                };
+                s.parentNode.insertBefore(tk, s)
+            })(document);
+
+    body
+        // loading indicator
+        #loader.loader-wrapper
+            .loader
+
+        // react render target
+        #root.rendering
+
+        // main app bundle
+        each jsFile in htmlWebpackPlugin.files.js
+            script(type="text/javascript" src=jsFile async)
+
+        // fathom analytics
+        script(type="text/javascript").
+            (function(f, a, t, h, o, m){
+                a[h]=a[h]||function(){
+                    (a[h].q=a[h].q||[]).push(arguments)
+                };
+                o=f.createElement('script'),
+                m=f.getElementsByTagName('script')[0];
+                o.async=1; o.src=t; o.id='fathom-script';
+                m.parentNode.insertBefore(o,m)
+            })(document, window, '//analytics.vincentriemer.com/tracker.js', 'fathom');
+            fathom('set', 'siteId', 'XVJNW');
+            fathom('trackPageview');

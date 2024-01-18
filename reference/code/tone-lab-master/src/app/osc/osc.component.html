@@ -1,0 +1,51 @@
+<div class="osc-top">
+    <app-toggles [options]="classes"
+                 class="osc-class-toggle"
+                 (toggle)="setClass($event)"
+                 [activeOption]="currentClass"></app-toggles>
+</div>
+<div class="osc-left">
+    <app-sink [name]="'cv'" [parent]="'osc'" [signal]="cvIn"></app-sink><br>
+    <app-sink [name]="'freq'" [parent]="'osc'" [signal]="osc.frequency"></app-sink>
+</div>
+
+<app-toggles [options]="types" *ngIf="currentClass !== 2 && currentClass !== 5"
+             [name]="'waveform'"
+             class="osc-waveform-toggle"
+             (toggle)="setType($event)"
+             [activeOption]="currentType"></app-toggles>
+
+<app-slider [signal]="osc.frequency"
+            style="color:grey"
+            [min]="0.0"
+            [max]="4000.0"
+            [name]="'frequency'"></app-slider>
+
+<app-slider [signal]="osc.detune"
+            style="color:grey"
+            [min]="-12.0"
+            [max]="12.0"
+            [name]="'detune'"></app-slider>
+
+<app-slider [signal]="osc.volume"
+            style="color:grey"
+            [min]="-10.0"
+            [max]="10.0"
+            [name]="'volume'"></app-slider>
+
+<app-slider [signal]="osc.width"
+            style="color:grey"
+            [min]="0.0"
+            [max]="1.0"
+            *ngIf="currentClass === 5"
+            [name]="'width'"></app-slider>
+
+<app-slider [signal]="osc.harmonicity"
+            style="color:grey"
+            [min]="0.0"
+            [max]="5.0"
+            *ngIf="currentClass === 3 || currentClass === 4"
+            [name]="'harmonicity'"></app-slider>
+
+<app-source [name]="'out'" [signal]="osc"></app-source>
+

@@ -1,0 +1,58 @@
+.composition-sharing {
+  padding-left: 8px;
+  padding-right: 8px;
+
+  .share-composition-form {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      width: 100px;
+    }
+  }
+
+  .custom-field-renderer {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 12px;
+
+    label {
+      padding-right: 6px;
+    }
+
+    span {
+      padding-left: 6px;
+    }
+  }
+
+  .shared-composition-listing {
+    max-width: 800px;
+
+    .composition-item {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding-bottom: 4px;
+      padding-top: 4px;
+
+      > div {
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+      }
+
+      .composition-title {
+        font-weight: bold;
+      }
+
+      .composition-description {
+        flex: 2;
+      }
+
+      button {
+        height: 18px;
+        width: 60px;
+      }
+    }
+  }
+}

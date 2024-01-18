@@ -21,6 +21,7 @@ module.exports = {
   resolve: {
     extensions: [".js", ".ts", '.wasm']
   },
+  devtool: 'inline-source-map',
   plugins: [
     new CopyPlugin([
       path.resolve(__dirname, "static")

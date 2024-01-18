@@ -1,0 +1,5 @@
+.dropbox
+.DS_Store
+/website/**/beepbox*.js
+/website/**/beepbox*.js.map
+/website/beepbox_offline.html
